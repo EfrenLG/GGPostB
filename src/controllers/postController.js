@@ -1,0 +1,127 @@
+const Post = require('../models/postModel');
+const { createPostValidations, deletePostValidations } = require('../validations/postValidations');
+const { uploadFile, updateUserPost, updatePostView, updatePostLike } = require('../services/postService');
+
+
+const postController = {
+
+    // Registro de post
+    register: [
+        ...createPostValidations,
+        async (req, res) => {
+            try {
+                const { idUser, file, tittle, description, categories } = req.body;
+
+                const newPost = new Post({
+                    idUser,
+                    file,
+                    tittle,
+                    description,
+                    categories
+                });
+
+                await newPost.save();
+
+                res.status(201).json({ status: 200 });
+            } catch (error) {
+                res.status(500).json({ error: error.message });
+            };
+        }],
+    uploadFile: [
+        async (req, res) => {
+            try {
+                if (!req.file) {
+                    return res.status(400).json({ error: 'No se ha proporcionado ningún archivo' });
+                }
+
+                const filename = await uploadFile(req.file);
+                res.status(201).json({ message: 'Archivo subido exitosamente', filename });
+            } catch (error) {
+                console.error('Error al subir archivo:', error);
+                res.status(500).json({ error: 'Error al subir el archivo' });
+            };
+        }],
+    delete: [
+        ...deletePostValidations,
+        async (req, res) => {
+            try {
+                const { id } = req.params;
+
+                const post = await Post.findByIdAndDelete(id);
+                if (!post) {
+                    return res.status(404).json({ error: 'Post no encontrado' });
+                }
+
+                res.status(200).json({ message: 'Post eliminado exitosamente', id });
+            } catch (error) {
+                console.error('Error al eliminar el post:', error);
+                res.status(500).json({ error: 'Error al eliminar el post' });
+            }
+        }],
+    uploadPost: [
+        async (req, res) => {
+            try {
+
+                const { idPost, tittlePost, descriptionPost, categoriesPost } = req.body;
+
+                if (!idPost) {
+                    return res.status(400).json({ error: 'ID del post no proporcionado' });
+                }
+
+                const updatedUser = await updateUserPost(idPost, tittlePost, descriptionPost, categoriesPost);
+
+                res.status(200).json({ message: 'Post actualizado exitosamente' });
+
+            } catch (error) {
+                console.error('Error al subir archivo:', error);
+                res.status(500).json({ error: 'Error al subir el archivo' });
+            };
+        }],
+    uploadPostView: [
+        async (req, res) => {
+            try {
+
+                const { idPost } = req.body;
+
+                if (!idPost) {
+                    return res.status(400).json({ error: 'ID del post no proporcionado' });
+                }
+
+                const updatedUser = await updatePostView(idPost);
+
+                res.status(200).json({ message: 'Post actualizado exitosamente' });
+
+            } catch (error) {
+                console.error('Error al subir archivo:', error);
+                res.status(500).json({ error: 'Error al subir el archivo' });
+            };
+        }],
+    uploadPostLike: [
+        async (req, res) => {
+            try {
+
+                const { idPost, userId } = req.body;
+
+                if (!idPost) {
+                    return res.status(400).json({ error: 'ID del post no proporcionado' });
+                };
+
+                if (!userId) {
+                    return res.status(400).json({ error: 'ID del usuario no proporcionado' });
+                }
+
+                const { updatedPost, action } = await updatePostLike(idPost, userId);
+
+                res.status(200).json({
+                    message: `Se ha hecho ${action} correctamente.`,
+                    post: updatedPost
+                });
+
+            } catch (error) {
+                console.error('Error al subir archivo:', error);
+                res.status(500).json({ error: 'Error al subir el archivo' });
+            };
+        }],
+};
+
+module.exports = postController;

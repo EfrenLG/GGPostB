@@ -1,0 +1,62 @@
+// Importación de servicios
+const { getUser, updateUserIcon } = require('../services/userServices');
+const { getUserValidations, updateUserIconValidations } = require('../validations/userValidations');
+
+const userController = {
+    
+        getUserController: [
+            ...getUserValidations,
+            async (req, response) => {
+                try {
+    
+                    const { username } = req.params;
+                    const data = await getUser(username);
+    
+                    response.status(200).json(data);
+    
+                } catch(e) {
+    
+                    console.log('Error al recoger usuario de la BBDD', e);
+                    response.status(500).json({ error: 'Error al recoger usuario de la BBDD' });
+                }
+            }
+        ],
+        updateUserIcon: [
+            ...updateUserIconValidations,
+            async (req, response) => {
+                try {
+                    const { id, file, } = req.body;
+            
+                    const updatedUser = await updateUserIcon(id, file);
+                    response.status(200).json({ success: true });
+                } catch(e) {
+                    console.log('Error al actualizar usuario', e);
+                    response.status(500).json({ error: 'Error al actualizar usuario' });
+                }
+            }
+        ],
+                /*updateUserPost: [
+            ...updateUserPostValidations,
+            async (req, response) => {
+                try {
+                    const { id, file, tittle, description } = req.body;
+            
+                    const newUser = new Usuario({
+                        username,
+                        email,
+                        password,
+                    });
+    
+                    await newUser.save();
+                    res.status(201).json({ status: 200 });
+                } catch(e) {
+                    console.log('Error al actualizar usuario', e);
+                    response.status(500).json({ error: 'Error al actualizar usuario' });
+                }
+            }
+        ]
+        
+    */
+};
+
+module.exports = userController;
