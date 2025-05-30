@@ -20,7 +20,7 @@ app.use(express.json());
 
 //PARA QUE NO ME BORRE EL TOKEN DE LAS COOKIES LA BASE DE LA URL TIENE QUE SER ASI!!!--> http://localhost:5500/
 app.use(cors({
-  origin: 'https://gg-post-f.vercel.app/',
+  origin: 'https://gg-post-f.vercel.app',
   credentials: true
 }));
 app.use(helmet());
