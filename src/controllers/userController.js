@@ -9,8 +9,8 @@ const userController = {
             async (req, response) => {
                 try {
     
-                    const { username } = req.params;
-                    const data = await getUser(username);
+                    const { id } = req.params;
+                    const data = await getUser(id);
     
                     response.status(200).json(data);
     

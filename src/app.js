@@ -36,7 +36,6 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 //RUTAS PUBLICAS
 app.use('/auth', authRoutes);
-//
 app.use('/email', emailRoutes);
 
 //RUTAS PRIVADAS

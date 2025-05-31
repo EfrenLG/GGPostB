@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 
 //GET
-router.get('/:username', userController.getUserController);
+router.get('/:id', userController.getUserController);
 
 // PUT
 router.put('/icon', userController.updateUserIcon);

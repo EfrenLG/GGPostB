@@ -1,14 +1,12 @@
 const Usuario = require('../models/userModel');
 const Post = require('../models/postModel');
 
-async function getUser(username) {
+async function getUser(id) {
 
     try {
 
-        const usuario = await Usuario.findOne({ username });
-
-        const idUser = usuario._id;
-        const post = await Post.find({ idUser });
+        const usuario = await Usuario.findOne({ id });
+        const post = await Post.find({ id });
 
         if (!post) {
             return res.status(401).json({ error: 'No tiene posts' + user._id });
