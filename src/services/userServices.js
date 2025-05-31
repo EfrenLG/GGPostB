@@ -14,9 +14,7 @@ async function getUser(username) {
             return res.status(401).json({ error: 'No tiene posts' + user._id });
         };
 
-        const posts = await Post.find();
-
-        const data = [{ usuario, post, posts }];
+        const data = [{ usuario, post }];
 
         const mensaje = !usuario ? false : data;
         return mensaje;

@@ -35,28 +35,6 @@ const userController = {
                 }
             }
         ],
-                /*updateUserPost: [
-            ...updateUserPostValidations,
-            async (req, response) => {
-                try {
-                    const { id, file, tittle, description } = req.body;
-            
-                    const newUser = new Usuario({
-                        username,
-                        email,
-                        password,
-                    });
-    
-                    await newUser.save();
-                    res.status(201).json({ status: 200 });
-                } catch(e) {
-                    console.log('Error al actualizar usuario', e);
-                    response.status(500).json({ error: 'Error al actualizar usuario' });
-                }
-            }
-        ]
-        
-    */
 };
 
 module.exports = userController;

@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/userModel');
-const Post = require('../models/postModel');
 const { checkUserValidations, createUserValidations, loginUserValidations } = require('../validations/userValidations');
 
 const JWT_SECRET = 'SlztIJvefUHFyVQrNAYS6rtk23';
@@ -64,9 +63,6 @@ const authController = {
                     return res.status(401).json({ error: 'Credenciales inválidas' });
                 };
 
-                const idUser = user._id;
-                const post = await Post.find({ idUser });
-
                 // Comparar contraseñas
                 const isMatch = await bcrypt.compare(password, user.password);
                 if (!isMatch) {
@@ -81,23 +77,13 @@ const authController = {
 
                 res.cookie('token', token, {
                     httpOnly: true,
-                    secure: false,
-                    sameSite: 'lax',
+                    secure: true,
+                    sameSite: 'none',
                     maxAge: 3600000,
                 });
 
                 res.json({
                     message: 'Login exitoso',
-                    user: { id: user._id, username: user.username, email: user.email, icon: user.icon },
-                    token: token,
-                    status: 200,
-                    posts: post.map(p => ({
-                        id: p._id,
-                        file: p.file,
-                        tittle: p.tittle,
-                        description: p.description,
-                        fechaAlta: p.fechaAlta
-                    }))
                 });
             } catch (error) {
                 res.status(500).json({ error: error.message });

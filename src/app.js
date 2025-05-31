@@ -36,15 +36,16 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 //RUTAS PUBLICAS
 app.use('/auth', authRoutes);
+//
 app.use('/email', emailRoutes);
 
 //RUTAS PRIVADAS
 app.use('/api/user', authMiddleware, userRoutes);
 
-//Guardo el icono del usuario y la foto del post
+//Guardo el icono del usuario y la foto del post (imagenes)
 app.use('/api/icon', authMiddleware, fileRoutes);
 
-//Guardo el post
+//Guardo el post (datos)
 app.use('/api/post', authMiddleware, postRoutes);
 
 
