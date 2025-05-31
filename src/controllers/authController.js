@@ -63,9 +63,6 @@ const authController = {
                     return res.status(401).json({ error: 'Credenciales inválidas' });
                 };
 
-                const idUser = user._id;
-                const post = await Post.find({ idUser });
-
                 // Comparar contraseñas
                 const isMatch = await bcrypt.compare(password, user.password);
                 if (!isMatch) {
