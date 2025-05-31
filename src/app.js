@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -23,6 +24,7 @@ app.use(cors({
   origin: 'https://gg-post-f.vercel.app',
   credentials: true
 }));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(helmet());
 app.use(mongoSanitize());
 
