@@ -6,6 +6,17 @@ const { uploadFile, updateUserPost, updatePostView, updatePostLike } = require('
 const postController = {
 
     // Registro de post
+    all: [
+        async (req, res) => {
+            try {
+
+                const posts = await Post.find().sort({ fechaAlta: -1 });
+
+                res.status(201).json({ status: 200, posts });
+            } catch (error) {
+                res.status(500).json({ error: error.message });
+            };
+        }],
     register: [
         ...createPostValidations,
         async (req, res) => {
