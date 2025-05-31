@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/userRoutes');
@@ -26,18 +25,8 @@ app.use(cors({
   credentials: true
 }));
 
-app.get('/debug/icons', (req, res) => {
-  const iconsPath = path.join(__dirname, 'icons');
-  fs.readdir(iconsPath, (err, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'No se pudo leer la carpeta icons', details: err.message });
-    }
-    res.json({ files });
-  });
-});
-
-app.use('/icons', express.static(path.join(__dirname, 'icons')));
-app.use('/post', express.static(path.join(__dirname, 'post')));
+app.use('/icons', express.static(path.join(__dirname, '..', 'icons')));
+app.use('/post', express.static(path.join(__dirname, '..', 'post')));
 
 app.use(helmet());
 app.use(mongoSanitize());
