@@ -24,7 +24,9 @@ app.use(cors({
   origin: 'https://gg-post-f.vercel.app',
   credentials: true
 }));
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/icons', express.static(path.join(__dirname, 'icons')));
+app.use('/post', express.static(path.join(__dirname, 'post')));
+
 app.use(helmet());
 app.use(mongoSanitize());
 
