@@ -5,14 +5,14 @@ async function getUser(id) {
 
     try {
 
-        const usuario = await Usuario.findById({ id });
+        const usuario = await Usuario.findById( id );
         const post = await Post.find({ idUser: id });
 
         if (!post) {
             return res.status(401).json({ error: 'No tiene posts' + user._id });
         };
 
-        const data = [{ usuario, post }];
+        const data = { usuario, post };
 
         const mensaje = !usuario ? false : data;
         return mensaje;
