@@ -67,11 +67,11 @@ const loginUserValidations = [
 
 // Validaciones para obtener usuario por ID
 const getUserValidations = [
-    param('username')
+    param('id')
         .notEmpty()
-        .withMessage('El nombre es requerido')
+        .withMessage('El id es requerido')
         .isString()
-        .withMessage('El nombre de usuario debe ser una cadena'),
+        .withMessage('El id de usuario debe ser una cadena'),
 
     validateResult
 ];
