@@ -5,8 +5,8 @@ async function getUser(id) {
 
     try {
 
-        const usuario = await Usuario.findOne({ id });
-        const post = await Post.find({ id });
+        const usuario = await Usuario.findById({ id });
+        const post = await Post.find({ idUser: id });
 
         if (!post) {
             return res.status(401).json({ error: 'No tiene posts' + user._id });
@@ -21,7 +21,7 @@ async function getUser(id) {
 
         console.error('Error al obtener usuarios:', err);
         throw err;
-    }
+    };
 };
 
 async function updateUserIcon(id, file) {
@@ -41,7 +41,7 @@ async function updateUserPost(id, file, tittle, description) {
         console.log('Usuario actualizado:', res);
     } catch (err) {
         console.error('Error al actualizar usuario:', err);
-    }
+    };
 };
 
 module.exports = { getUser, updateUserIcon, updateUserPost };
