@@ -1,5 +1,7 @@
+const WebSocket = require('ws');
 const clients = new Set();
 const Message = require('../models/messageModel'); 
+
 const chatService = {
     addClient(client) {
         clients.add(client);
@@ -20,8 +22,9 @@ const chatService = {
             await newMessage.save();
 
             const messageString = JSON.stringify(messageData);
+
             clients.forEach((client) => {
-                if (client.readyState === 1) { 
+                if (client && client.readyState === WebSocket.OPEN) {
                     client.send(messageString);
                 }
             });
