@@ -28,8 +28,7 @@ const postSchema = new mongoose.Schema({
         default: 0
     },
     categories: {
-        type: String,
-        required: true,
+        type: String
     },
     fechaAlta: {
         type: Date,
