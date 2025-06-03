@@ -1,5 +1,5 @@
 const clients = new Set();
-const Message = require('../models/Message'); 
+const Message = require('../models/messageModel'); 
 const chatService = {
     addClient(client) {
         clients.add(client);
