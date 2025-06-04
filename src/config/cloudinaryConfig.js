@@ -9,11 +9,11 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
+  params: (req, file) => ({
     folder: 'ggpost-icons',
     allowed_formats: ['jpg', 'png', 'webp'],
-    public_id: `${Date.now()}-${file.originalname.replace(/\.[^/.]+$/, "")}`,
-  },
+    public_id: `${Date.now()}-${file.originalname.replace(/\.[^/.]+$/, '')}`,
+  }),
 });
 
 module.exports = {
