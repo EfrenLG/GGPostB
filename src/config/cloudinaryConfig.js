@@ -12,7 +12,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder: 'ggpost-icons',
     allowed_formats: ['jpg', 'png', 'webp'],
-    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
+    public_id: `${Date.now()}-${file.originalname.replace(/\.[^/.]+$/, "")}`,
   },
 });
 
