@@ -3,16 +3,25 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 cloudinary.config({
   cloud_name: 'dpf3ly5ux',
-  api_key: '512682476614917',
-  api_secret: 'TC2c1I0Um8Z7rBuALZ0J7iSC3Qac',
+  api_key: '958536579359381',
+  api_secret: 'agDaOAY4pYI105OOKi6Yffh3D-A',
 });
+console.log("Cloudinary configurado correctamente");
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: (req, file) => ({
-    folder: 'ggpost-icons',
-    public_id: `${Date.now()}-${file.originalname.replace(/\.[^/.]+$/, '')}`,
-  }),
+  params: (req, file) => {
+    if (!file.originalname) {
+      throw new Error("originalname no está definido en el archivo recibido por Multer");
+    };
+    const cleanName = file.originalname.replace(/\.[^/.]+$/, '');
+    const id = `${Date.now()}-${cleanName}`;
+    console.log("Public ID generado para Cloudinary:", id); // 👈 Añadir este log
+    return {
+      folder: 'ggpost-icons',
+      public_id: id,
+    };
+  }
 });
 
 module.exports = {
