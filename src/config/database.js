@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
+const uri = process.env.MONGO_URI;
+
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://Efren:admin1234@cluster0.tmxxndu.mongodb.net/taskPlanner-PRO?retryWrites=true&w=majority&appName=Cluster0');
+        await mongoose.connect(uri);
         console.log('Conexión a la base de datos establecida correctamente');
     } catch (error) {
         console.error('Error al conectar con la base de datos:', error);
