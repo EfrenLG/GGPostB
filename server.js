@@ -5,7 +5,7 @@ const WebSocket = require('ws');
 const { handleConnection } = require('./src/controllers/chatController');
 const config = require('./src/config/configWS');
 
-const port = config.port || 5173;
+const port = process.env.PORT || 5173;
 
 const server = http.createServer(app);
 
